@@ -2,14 +2,14 @@
 
 A simple CLI tool to generate folder structures from YAML or text files.
 
-## 📌 Installation
+### 📌 Installation
 
-See INSTALLATION.md for details.
+See `INSTALLATION.md` for details.
 
-## 🚀 Usage
+### 🚀 Usage
 
-For a detailed guide on using the CLI tool, check out USAGE.md.
+For a detailed guide on using the CLI tool, check out `USAGE.md`.
 
-## 🎯 License
+### 🎯 License
 
-This project is licensed under the MIT License. See LICENSE for details.
+This project is licensed under the MIT License. See `LICENSE` for details.
