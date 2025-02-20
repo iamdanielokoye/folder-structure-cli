@@ -1,0 +1,68 @@
+import yaml
+
+def parse_yaml(file_path):
+    """
+    Parses a YAML file and converts it to a structured dictionary.
+    """
+    with open(file_path, 'r') as file:
+        data = yaml.safe_load(file)
+
+    def convert_to_list(structure, name="root"):
+        result = []
+        if isinstance(structure, list):
+            for item in structure:
+                if isinstance(item, dict):
+                    for key, value in item.items():
+                        result.append({
+                            "name": key,
+                            "type": "folder",
+                            "children": convert_to_list(value, key)
+                        })
+                else:
+                    result.append({"name": item, "type": "file"})
+        return result
+
+    return convert_to_list(data)
+
+def parse_text(file_path):
+    """
+    Parses a text file to generate a structured dictionary.
+    """
+    with open(file_path, 'r') as file:
+        lines = file.readlines()
+
+    structure = []
+    stack = [(structure, -1)]  # Stack to track indentation levels
+
+    for line in lines:
+        indent_level = len(line) - len(line.lstrip())
+        name = line.strip()
+
+        if not name:
+            continue
+
+        item_type = "folder" if name.endswith('/') else "file"
+        entry = {"name": name.rstrip('/'), "type": item_type}
+        
+        while stack and stack[-1][1] >= indent_level:
+            stack.pop()
+
+        parent, _ = stack[-1]
+        parent.append(entry)
+
+        if item_type == "folder":
+            entry["children"] = []
+            stack.append((entry["children"], indent_level))
+
+    return structure
+
+def parse_structure(file_path):
+    """
+    Determines the file type (YAML or Text) and parses accordingly.
+    """
+    if file_path.endswith('.yaml') or file_path.endswith('.yml'):
+        return parse_yaml(file_path)
+    elif file_path.endswith('.txt'):
+        return parse_text(file_path)
+    else:
+        raise ValueError("Unsupported file format. Use YAML or TXT.")
