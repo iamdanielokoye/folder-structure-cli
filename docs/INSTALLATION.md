@@ -1,31 +1,26 @@
-Installation Guide
+# Installation Guide
 
-Prerequisites
+## Prerequisites
 
 Before installing, ensure you have the following installed on your system:
 
-Python (>= 3.8)
+- Python (>= 3.8)
+- Pip
 
-Pip
+## Installation
 
-Installation
+- Clone the Repository
+        git clone https://github.com/okkodann/folder-structure-cli.git
+        cd folder-structure-cli
 
-Clone the Repository
+- Create a Virtual Environment (Recommended)
+        python -m venv venv
+        source venv/bin/activate  # On Windows: venv\Scripts\activate
 
-git clone https://github.com/okkodann/folder-structure-cli.git
-cd folder-structure-cli
+- Install Dependencies
+        pip install -r requirements.txt
 
-Create a Virtual Environment (Recommended)
-
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-
-Install Dependencies
-
-pip install -r requirements.txt
-
-Verify Installation
-
-python src/cli.py --help
+- Verify Installation
+        python src/cli.py --help
 
 If the installation is successful, you should see the usage guide.
