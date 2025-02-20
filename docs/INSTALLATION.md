@@ -10,17 +10,21 @@ Before installing, ensure you have the following installed on your system:
 ## Installation
 
 - Clone the Repository
-        git clone https://github.com/okkodann/folder-structure-cli.git
+
+        git clone https://github.com/iamdanielokoye/folder-structure-cli.git
         cd folder-structure-cli
 
 - Create a Virtual Environment (Recommended)
+
         python -m venv venv
         source venv/bin/activate  # On Windows: venv\Scripts\activate
 
 - Install Dependencies
+
         pip install -r requirements.txt
 
 - Verify Installation
+
         python src/cli.py --help
 
 If the installation is successful, you should see the usage guide.
