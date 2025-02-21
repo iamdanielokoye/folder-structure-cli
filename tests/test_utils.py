@@ -2,13 +2,17 @@
 import unittest
 import os
 from src.create_structure import create_folders_and_files
-import sys
-
-sys.path.insert(0, '../src')
 
 class TestUtils(unittest.TestCase):
     def test_create_structure(self):
-        structure = {'test_project': ['README.md', {'src': ['main.py']}]}
+        structure = [
+            {"name": "test_project", "type": "folder", "children": [
+                {"name": "README.md", "type": "file"},
+                {"name": "src", "type": "folder", "children": [
+                    {"name": "main.py", "type": "file"}
+                ]}
+            ]}
+        ]
         base_path = "test_output"
         create_folders_and_files(structure, base_path)
         self.assertTrue(os.path.exists(os.path.join(base_path, "test_project", "README.md")))
