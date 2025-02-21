@@ -14,11 +14,11 @@
 
 - Using a YAML File
 
-        python src/cli.py examples/structure.yaml my_project
+        folder cli ./examples/text/structure.yaml ./  # Path to the YAML file in this project. The folders are created in the working directory.
 
 - Using a Text File
 
-        python src/cli.py examples/structure.txt my_project
+        folder-cli ./examples/text/structure.txt # Path to the text file in this project. The folders are created in the working directory.
 
 ### File Formats
 
