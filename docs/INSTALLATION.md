@@ -14,16 +14,19 @@ Before installing, ensure you have the following installed on your system:
         git clone https://github.com/iamdanielokoye/folder-structure-cli.git
         cd folder-structure-cli
 
-- Create a Virtual Environment (Recommended)
+- Navigate to the scripts Directory:
 
-        python -m venv venv
-        source venv/bin/activate  # On Windows: venv\Scripts\activate
+        cd scripts
 
-- Install Dependencies
+- Make the Script Executable (you only need to do this once):
 
-        pip install -r requirements.txt
+        chmod +x setup.sh
 
-- Verify Installation
+- Navigate back to the root directory and run the script:
+
+        ./scripts/setup.sh
+
+- Verify the installation nstallation
 
         python src/cli.py --help
 

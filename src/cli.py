@@ -1,5 +1,5 @@
 import argparse
-from src.create_structure import create_folders_and_files
+from src.create_structure import create_folders_and_files 
 from src.parser import parse_structure
 
 def main():
