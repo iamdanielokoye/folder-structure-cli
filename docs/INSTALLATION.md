@@ -26,7 +26,7 @@ Before installing, ensure you have the following installed on your system:
 
         ./scripts/setup.sh #This will install the cli globally.
 
-- Verify the installation nstallation
+- Verify the installation
 
         folder-cli --help
 

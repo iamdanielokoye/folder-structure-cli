@@ -9,6 +9,6 @@ pip install --upgrade pip setuptools
 pip install -r requirements.txt
 
 # Install the CLI tool
-pip install -e .
+pip install -e ./scripts
 
 echo "✅ Setup Complete! You can now run 'folder-cli --help'"
