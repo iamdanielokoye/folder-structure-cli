@@ -1,11 +1,14 @@
 #!/bin/bash
 
-echo "Setting up the folder-structure-cli..."
+echo "📦 Setting up the folder-cli..."
+
+# Ensure pip and setuptools are up to date
+pip install --upgrade pip setuptools
 
 # Install project dependencies
 pip install -r requirements.txt
 
-# Install the package using setup.py (from the project root)
-pip install -e ./scripts # Or pip install -e ./scripts if setup.py is there
+# Install the CLI tool
+pip install -e .
 
-echo "✅ Setup Complete!"
+echo "✅ Setup Complete! You can now run 'folder-cli --help'"

@@ -4,7 +4,7 @@
 
 ### Basic Usage
 
-    python src/cli.py <structure_file> <output_directory>
+        python src/cli.py <structure_file> <output_directory>
 
 `structure_file`: The YAML or text file defining the folder structure.
 
@@ -14,7 +14,7 @@
 
 - Using a YAML File
 
-            python src/cli.py examples/structure.yaml my_project
+        python src/cli.py examples/structure.yaml my_project
 
 - Using a Text File
 
