@@ -6,23 +6,29 @@ def parse_yaml(file_path):
     """
     with open(file_path, 'r') as file:
         data = yaml.safe_load(file)
-
-    def convert_to_list(structure, name="root"):
-        result = []
-        if isinstance(structure, list):
-            for item in structure:
-                if isinstance(item, dict):
-                    for key, value in item.items():
-                        result.append({
-                            "name": key,
-                            "type": "folder",
-                            "children": convert_to_list(value, key)
-                        })
-                else:
-                    result.append({"name": item, "type": "file"})
-        return result
-
     return convert_to_list(data)
+
+def parse_yaml_string(yaml_string):
+    """
+    Parses a YAML string and converts it to a structured dictionary.
+    """
+    data = yaml.safe_load(yaml_string)
+    return convert_to_list(data)
+
+def convert_to_list(structure, name="root"):
+    result = []
+    if isinstance(structure, list):
+        for item in structure:
+            if isinstance(item, dict):
+                for key, value in item.items():
+                    result.append({
+                        "name": key,
+                        "type": "folder",
+                        "children": convert_to_list(value, key)
+                    })
+            else:
+                result.append({"name": item, "type": "file"})
+    return result
 
 def parse_text(file_path):
     """

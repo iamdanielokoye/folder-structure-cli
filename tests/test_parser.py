@@ -1,6 +1,6 @@
 # test_parser.py
 import unittest
-from src.parser import parse_structure
+from src.parser import parse_yaml_string
 
 class TestParser(unittest.TestCase):
     def test_parse_yaml(self):
@@ -11,8 +11,14 @@ class TestParser(unittest.TestCase):
               - main.py
               - utils.py
         """
-        expected_output = {'project': ['README.md', {'src': ['main.py', 'utils.py']}]}
-        self.assertEqual(parse_structure(yaml_data, 'yaml'), expected_output)
+        expected_output = [{'name': 'project', 'type': 'folder', 'children': [
+            {'name': 'README.md', 'type': 'file'},
+            {'name': 'src', 'type': 'folder', 'children': [
+                {'name': 'main.py', 'type': 'file'},
+                {'name': 'utils.py', 'type': 'file'}
+            ]}
+        ]}]
+        self.assertEqual(parse_yaml_string(yaml_data), expected_output)
 
 if __name__ == "__main__":
     unittest.main()
