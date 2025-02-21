@@ -15,19 +15,35 @@ def parse_yaml_string(yaml_string):
     data = yaml.safe_load(yaml_string)
     return convert_to_list(data)
 
-def convert_to_list(structure, name="root"):
+def convert_to_list(structure):
     result = []
-    if isinstance(structure, list):
+    if isinstance(structure, dict):
+        for key, value in structure.items():
+            if isinstance(value, list):
+                result.append({
+                    "name": key,
+                    "type": "folder",
+                    "children": convert_to_list(value)
+                })
+            else:
+                result.append({
+                    "name": key,
+                    "type": "file"
+                })
+    elif isinstance(structure, list):
         for item in structure:
             if isinstance(item, dict):
                 for key, value in item.items():
                     result.append({
                         "name": key,
                         "type": "folder",
-                        "children": convert_to_list(value, key)
+                        "children": convert_to_list(value)
                     })
             else:
-                result.append({"name": item, "type": "file"})
+                result.append({
+                    "name": item,
+                    "type": "file"
+                })
     return result
 
 def parse_text(file_path):
