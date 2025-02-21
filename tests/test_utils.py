@@ -2,6 +2,9 @@
 import unittest
 import os
 from src.create_structure import create_structure
+import sys
+
+sys.path.insert(0, '../src')
 
 class TestUtils(unittest.TestCase):
     def test_create_structure(self):
