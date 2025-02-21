@@ -1,7 +1,7 @@
 # test_utils.py
 import unittest
 import os
-from src.utils import create_structure
+from src.create_structure import create_structure
 
 class TestUtils(unittest.TestCase):
     def test_create_structure(self):
