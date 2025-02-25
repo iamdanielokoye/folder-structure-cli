@@ -1,6 +1,7 @@
 import argparse
 import os
 import sys
+import subprocess
 from src.create_structure import create_folders_and_files 
 from src.parser import parse_structure
 
@@ -21,20 +22,23 @@ def show_description():
 
 def update_tool():
     print("Updating Folder Structure CLI Tool to the latest version...")
-    # Simulate update process
-    print("✅ Tool updated to the latest version.")
+    try:
+        subprocess.run(["sh", "scripts/update.sh"], check=True)
+        print("✅ Tool updated to the latest version.")
+    except subprocess.CalledProcessError as e:
+        print(f"❌ Failed to update the tool: {e}")
 
 def main():
     parser = argparse.ArgumentParser(description="Folder Structure CLI Tool")
     parser.add_argument("structure_file", nargs='?', help="Path to the structure file (YAML or TXT)")
     parser.add_argument("output_directory", nargs='?', help="Target directory for the structure")
     parser.add_argument("--list-tags", action="store_true", help="List all available tags")
-    parser.add_argument("--update", action="store_true", help="Update the tool to the latest version")
-    parser.add_argument("--version", action="version", version="Folder Structure CLI Tool 1.0")
-    parser.add_argument("--dry-run", action="store_true", help="Simulate the creation of the folder structure")
-    parser.add_argument("--verbose", action="store_true", help="Provide detailed output of the operations")
+    parser.add_argument("-u", "--update", action="store_true", help="Update the tool to the latest version")
+    parser.add_argument("-v", "--version", action="version", version="Folder Structure CLI Tool 1.0")
+    parser.add_argument("-dr", "--dry-run", action="store_true", help="Simulate the creation of the folder structure")
+    parser.add_argument("-vb", "--verbose", action="store_true", help="Provide detailed output of the operations")
     parser.add_argument("--config", help="Specify a configuration file for additional settings")
-    parser.add_argument("--force", action="store_true", help="Overwrite existing files and directories without prompting")
+    parser.add_argument("-f", "--force", action="store_true", help="Overwrite existing files and directories without prompting")
 
     args = parser.parse_args()
 

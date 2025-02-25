@@ -1,7 +1,5 @@
 #!/bin/bash
 
-echo "Updating folder-structure-cli..."
-
 # 1. Pull the latest changes from the repository (adjust branch if needed)
 git pull origin main
 
@@ -15,5 +13,3 @@ fi
 
 # 3. Reinstall the package (from the project root)
 pip install -e ./scripts
-
-echo "Update complete!"
