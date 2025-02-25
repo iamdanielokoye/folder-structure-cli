@@ -60,7 +60,7 @@ def parse_text(file_path):
         indent_level = len(line) - len(line.lstrip())
         name = line.strip()
 
-        if not name:
+        if not name or name.startswith('#'):
             continue
 
         item_type = "folder" if name.endswith('/') else "file"

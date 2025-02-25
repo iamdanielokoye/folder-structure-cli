@@ -28,7 +28,7 @@ Before installing, ensure you have the following installed on your system:
 
 - Navigate back to the root directory and run the script:
 
-        ./scripts/setup.sh #This will install the cli globally.
+        . scripts/setup.sh #This will install the cli globally.
 
 - Verify the installation
 
