@@ -57,16 +57,16 @@ def parse_text(file_path):
     stack = [(structure, -1)]  # Stack to track indentation levels
 
     for line in lines:
-        depth = line.count('│') + line.count('├') + line.count('└')
-        name = line.strip().replace('├──', '').replace('└──', '').replace('│', '').strip()
+        indent_level = len(line) - len(line.lstrip())
+        name = line.strip()
 
-        if not name or name.startswith('#'):
+        if not name:
             continue
 
         item_type = "folder" if name.endswith('/') else "file"
         entry = {"name": name.rstrip('/'), "type": item_type}
         
-        while stack and stack[-1][1] >= depth:
+        while stack and stack[-1][1] >= indent_level:
             stack.pop()
 
         parent, _ = stack[-1]
@@ -74,7 +74,7 @@ def parse_text(file_path):
 
         if item_type == "folder":
             entry["children"] = []
-            stack.append((entry["children"], depth))
+            stack.append((entry["children"], indent_level))
 
     return structure
 
