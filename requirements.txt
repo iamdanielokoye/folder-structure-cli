@@ -1,5 +1,4 @@
 pyYAML
 argparse
-os
 sys
 subprocess
