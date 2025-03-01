@@ -5,18 +5,13 @@ from src.parser import parse_structure
 def create_folders_and_files(file_path, base_path):
     """
     Parses a structured text file (YAML/JSON-like) and creates the directory structure.
-    Example:
-        folder: src
-            file: main.py
-            file: utils.py
-        file: README.md
     """
     try:
         with open(file_path, 'r', encoding='utf-8') as file:
             lines = file.readlines()
 
-        current_path = base_path
         stack = []
+        current_path = base_path
 
         for line in lines:
             stripped = line.strip()
@@ -25,18 +20,19 @@ def create_folders_and_files(file_path, base_path):
 
             if stripped.startswith("folder:"):
                 folder_name = stripped.replace("folder:", "").strip()
-                current_path = os.path.join(base_path, *stack, folder_name)
-                os.makedirs(current_path, exist_ok=True)
+                full_path = os.path.join(base_path, *stack, folder_name)
+                os.makedirs(full_path, exist_ok=True)
                 stack.append(folder_name)
-            
+
             elif stripped.startswith("file:"):
                 file_name = stripped.replace("file:", "").strip()
-                file_path = os.path.join(base_path, *stack, file_name)
-                open(file_path, 'w').close()  # Create an empty file
-            
+                full_path = os.path.join(base_path, *stack, file_name)
+                with open(full_path, 'w', encoding='utf-8'):
+                    pass  # Create an empty file
+
             elif stripped == "end":
                 if stack:
-                    stack.pop()  # Move up one directory level
+                    stack.pop()
 
         print("✅ Successfully created structure using structured TXT format.")
 
@@ -48,12 +44,6 @@ def create_folders_and_files(file_path, base_path):
 def create_structure_from_text(file_path, base_path):
     """
     Parses a tree-like structured text file and creates the directory structure.
-    Example:
-        project
-        ├── src
-        │   ├── main.py
-        │   ├── utils.py
-        └── README.md
     """
     try:
         with open(file_path, 'r', encoding='utf-8') as file:
@@ -70,12 +60,16 @@ def create_structure_from_text(file_path, base_path):
             while len(stack) > depth:
                 stack.pop()
 
-            current_path = os.path.join(base_path, *stack, name)
+            current_path = os.path.join(base_path, *stack)
+
+            # Ensure current_path is a valid string before joining
+            full_path = os.path.join(current_path, name)
 
             if '.' in name:  # File
-                open(current_path, 'w').close()
+                with open(full_path, 'w', encoding='utf-8'):
+                    pass  # Create an empty file
             else:  # Directory
-                os.makedirs(current_path, exist_ok=True)
+                os.makedirs(full_path, exist_ok=True)
                 stack.append(name)
 
         print("✅ Successfully created structure using tree-based indentation.")
