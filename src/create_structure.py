@@ -2,7 +2,7 @@ import os
 import sys
 from src.parser import parse_structure
 
-def create_structure_from_text(file_path, base_path):
+def create_folders_and_files(file_path, base_path):
     """
     Parses a tree-like structured text file and creates the directory structure.
     Example:
