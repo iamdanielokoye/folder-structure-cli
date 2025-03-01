@@ -2,19 +2,43 @@ import os
 import sys
 from src.parser import parse_structure
 
-def create_folders_and_files(structure, base_path):
+def create_structure_from_text(file_path, base_path):
     """
-    Recursively creates folders and files from a parsed structure.
+    Parses a tree-like structured text file and creates the directory structure.
+    Example:
+        project
+        ├── src
+        │   ├── main.py
+        │   ├── utils.py
+        └── README.md
     """
-    for item in structure:
-        path = os.path.join(base_path, item["name"])
+    try:
+        with open(file_path, 'r', encoding='utf-8') as file:
+            lines = file.readlines()
 
-        if item["type"] == "folder":
-            os.makedirs(path, exist_ok=True)
-            if "children" in item:
-                create_folders_and_files(item["children"], path)
-        elif item["type"] == "file":
-            open(path, 'w').close()  # Create empty file
+        stack = []
+        for line in lines:
+            depth = line.count('│') + line.count('├') + line.count('└')
+            name = line.strip().replace('├──', '').replace('└──', '').replace('│', '').strip()
+
+            if not name:
+                continue
+
+            while len(stack) > depth:
+                stack.pop()
+
+            current_path = os.path.join(base_path, *stack, name)
+
+            if '.' in name:  # File
+                open(current_path, 'w').close()
+            else:  # Directory
+                os.makedirs(current_path, exist_ok=True)
+                stack.append(name)
+
+        print("✅ Successfully created structure using tree-based indentation.")
+
+    except Exception as e:
+        print(f"❌ Failed to create structure using tree indentation: {e}")
 
 def main():
     if len(sys.argv) < 3:
