@@ -4,6 +4,49 @@ from src.parser import parse_structure
 
 def create_folders_and_files(file_path, base_path):
     """
+    Parses a structured text file (YAML/JSON-like) and creates the directory structure.
+    Example:
+        folder: src
+            file: main.py
+            file: utils.py
+        file: README.md
+    """
+    try:
+        with open(file_path, 'r', encoding='utf-8') as file:
+            lines = file.readlines()
+
+        current_path = base_path
+        stack = []
+
+        for line in lines:
+            stripped = line.strip()
+            if not stripped:
+                continue
+
+            if stripped.startswith("folder:"):
+                folder_name = stripped.replace("folder:", "").strip()
+                current_path = os.path.join(base_path, *stack, folder_name)
+                os.makedirs(current_path, exist_ok=True)
+                stack.append(folder_name)
+            
+            elif stripped.startswith("file:"):
+                file_name = stripped.replace("file:", "").strip()
+                file_path = os.path.join(base_path, *stack, file_name)
+                open(file_path, 'w').close()  # Create an empty file
+            
+            elif stripped == "end":
+                if stack:
+                    stack.pop()  # Move up one directory level
+
+        print("✅ Successfully created structure using structured TXT format.")
+
+    except Exception as e:
+        print(f"⚠️ Error with structured TXT format: {e}")
+        print("🔄 Trying tree-based indentation method...")
+        create_structure_from_text(file_path, base_path)
+
+def create_structure_from_text(file_path, base_path):
+    """
     Parses a tree-like structured text file and creates the directory structure.
     Example:
         project
