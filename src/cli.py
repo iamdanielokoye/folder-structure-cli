@@ -57,7 +57,7 @@ def main():
         return
 
     if args.structure_file.endswith('.txt'):
-        structure = create_structure_from_text(args.structure_file)
+        structure = create_structure_from_text(args.structure_file, args.output_directory)
     else:
         structure = parse_structure(args.structure_file)
 
