@@ -50,7 +50,7 @@ def create_structure_from_text(file_path, base_path):
             lines = file.readlines()
 
         stack = []
-        last_depth = 0
+        last_depth = -1
 
         for line in lines:
             depth = line.count('│') + line.count('├') + line.count('└')
