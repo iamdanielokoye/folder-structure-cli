@@ -70,7 +70,7 @@ def create_structure_from_text(file_path, base_path):
             full_path = os.path.join(current_path, name)
 
             if '.' in name:  # File
-                with open(full_path, 'w', encoding='utf-8'):
+                with open(full_path, 'w', encoding='utf-8').close():
                     pass  # Create an empty file
             else:  # Directory
                 os.makedirs(full_path, exist_ok=True)
