@@ -50,16 +50,20 @@ def create_structure_from_text(file_path, base_path):
             lines = file.readlines()
 
         stack = []
+        last_depth = 0
+
         for line in lines:
             depth = line.count('│') + line.count('├') + line.count('└')
             name = line.strip().replace('├──', '').replace('└──', '').replace('│', '').strip()
 
             if not name:
                 continue
-
+            
+            #Ensure stack matches depth
             while len(stack) > depth:
                 stack.pop()
 
+            #Build full path
             current_path = os.path.join(base_path, *stack)
 
             # Ensure current_path is a valid string before joining
