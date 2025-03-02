@@ -1,5 +1,6 @@
 import os
 import sys
+import json
 from src.parser import parse_structure
 
 def create_folders_and_files(file_path, base_path):
@@ -59,11 +60,11 @@ def create_structure_from_text(file_path, base_path):
             if not name:
                 continue
             
-            #Ensure stack matches depth
+            # Ensure stack matches depth
             while len(stack) > depth:
                 stack.pop()
 
-            #Build full path
+            # Build full path
             current_path = os.path.join(base_path, *stack)
 
             # Ensure current_path is a valid string before joining
@@ -81,6 +82,34 @@ def create_structure_from_text(file_path, base_path):
     except Exception as e:
         print(f"❌ Failed to create structure using tree indentation: {e}")
 
+def create_structure_from_json(file_path, base_path):
+    """
+    Parses a JSON file and creates the directory structure.
+    """
+    try:
+        with open(file_path, 'r', encoding='utf-8') as file:
+            structure = json.load(file)
+
+        def create_structure(structure, base_path):
+            for item in structure:
+                name = item["name"]
+                item_type = item["type"]
+                full_path = os.path.join(base_path, name)
+
+                if item_type == "folder":
+                    os.makedirs(full_path, exist_ok=True)
+                    if "children" in item:
+                        create_structure(item["children"], full_path)
+                elif item_type == "file":
+                    with open(full_path, 'w', encoding='utf-8'):
+                        pass  # Create an empty file
+
+        create_structure(structure, base_path)
+        print("✅ Successfully created structure using JSON format.")
+
+    except Exception as e:
+        print(f"❌ Failed to create structure using JSON format: {e}")
+
 def main():
     if len(sys.argv) < 3:
         print("Usage: python create_structure.py <structure_file> <output_directory>")
@@ -92,8 +121,13 @@ def main():
     if not os.path.exists(output_directory):
         os.makedirs(output_directory, exist_ok=True)
 
-    structure = parse_structure(structure_file)
-    create_folders_and_files(structure, output_directory)
+    if structure_file.endswith('.json'):
+        create_structure_from_json(structure_file, output_directory)
+    elif structure_file.endswith('.txt'):
+        create_structure_from_text(structure_file, output_directory)
+    else:
+        structure = parse_structure(structure_file)
+        create_folders_and_files(structure, output_directory)
     print(f"✅ Folder structure created successfully in: {output_directory}")
 
 if __name__ == "__main__":
