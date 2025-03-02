@@ -2,7 +2,8 @@ import argparse
 import os
 import sys
 import subprocess
-from src.create_structure import create_folders_and_files 
+from src.create_structure import create_folders_and_files
+from src.create_structure import create_structure_from_text
 from src.parser import parse_structure
 
 def list_tags():
