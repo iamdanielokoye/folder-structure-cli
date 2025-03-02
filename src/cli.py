@@ -56,7 +56,10 @@ def main():
         parser.print_help()
         return
 
-    structure = parse_structure(args.structure_file)
+    if args.structure_file.endswith('.txt'):
+        structure = create_structure_from_text(args.structure_file)
+    else:
+        structure = parse_structure(args.structure_file)
 
     if args.dry_run:
         print("Dry run mode: The following structure would be created:")
