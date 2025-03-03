@@ -3,7 +3,7 @@
 echo "📦 Setting up the folder-cli..."
 
 # Ensure pip and setuptools are up to date
-pip install --upgrade pip setuptools 
+pip install --upgrade pip setuptools wheel
 pip3 install requests
 
 # Install project dependencies
