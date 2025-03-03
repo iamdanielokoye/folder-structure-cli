@@ -2,7 +2,7 @@ import os
 from setuptools import setup, find_packages
 
 def get_version():
-    version_path = os.path.join(os.path.dirname(__file__), "../version.py") # Adjust path if needed
+    version_path = os.path.join(os.path.dirname(__file__), "__version__.py") # Adjust path if needed
     with open(version_path, "r") as f:
         for line in f:
             if line.startswith("__version__"):
