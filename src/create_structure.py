@@ -126,6 +126,9 @@ def main():
         create_structure_from_yaml(structure_file, output_directory)
     else:
         structure = parse_structure(structure_file)
+        if structure is None:
+            print(f"❌ Failed to parse structure file: {structure_file}")
+            return
         create_folders_and_files(structure, output_directory)
     print(f"✅ Folder structure created successfully in: {output_directory}")
 

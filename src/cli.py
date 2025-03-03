@@ -2,8 +2,7 @@ import argparse
 import os
 import sys
 import subprocess
-from src.create_structure import create_folders_and_files
-from src.create_structure import create_structure_from_text
+from src.create_structure import create_folders_and_files, create_structure_from_text, create_structure_from_yaml, create_structure_from_json
 from src.parser import parse_structure
 
 def list_tags():
@@ -15,7 +14,7 @@ def list_tags():
 def show_description():
     description = """
     Folder Structure CLI Tool
-    This tool helps you create folder structures based on a given YAML or TXT file.
+    This tool helps you create folder structures based on a given YAML, JSON, or TXT file.
     You can also list all available tags for the tool.
     """
     print(description)
@@ -31,7 +30,7 @@ def update_tool():
 
 def main():
     parser = argparse.ArgumentParser(description="Folder Structure CLI Tool")
-    parser.add_argument("structure_file", nargs='?', help="Path to the structure file (YAML or TXT)")
+    parser.add_argument("structure_file", nargs='?', help="Path to the structure file (YAML, JSON, or TXT)")
     parser.add_argument("output_directory", nargs='?', help="Target directory for the structure")
     parser.add_argument("--list-tags", action="store_true", help="List all available tags")
     parser.add_argument("-u", "--update", action="store_true", help="Update the tool to the latest version")
@@ -56,26 +55,19 @@ def main():
         parser.print_help()
         return
 
-    if args.structure_file.endswith('.txt'):
-        structure = create_structure_from_text(args.structure_file, args.output_directory)
+    if args.structure_file.endswith('.json'):
+        create_structure_from_json(args.structure_file, args.output_directory)
+    elif args.structure_file.endswith('.txt'):
+        create_structure_from_text(args.structure_file, args.output_directory)
+    elif args.structure_file.endswith('.yaml') or args.structure_file.endswith('.yml'):
+        create_structure_from_yaml(args.structure_file, args.output_directory)
     else:
         structure = parse_structure(args.structure_file)
-
-    if args.dry_run:
-        print("Dry run mode: The following structure would be created:")
-        print(structure)
-        return
-
-    if args.verbose:
-        print(f"Creating structure in {args.output_directory} with the following configuration:")
-        print(structure)
-
-    if args.force and os.path.exists(args.output_directory):
-        import shutil
-        shutil.rmtree(args.output_directory)
-
-    create_folders_and_files(structure, args.output_directory)
-    print(f"✅ Structure created successfully in {args.output_directory}")
+        if structure is None:
+            print(f"❌ Failed to parse structure file: {args.structure_file}")
+            return
+        create_folders_and_files(structure, args.output_directory)
+    print(f"✅ Folder structure created successfully in: {args.output_directory}")
 
 if __name__ == "__main__":
     main()
