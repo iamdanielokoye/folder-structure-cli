@@ -1,10 +1,9 @@
 #!/bin/bash
 
-# Pull the latest changes from the repository (adjust branch if needed)
+echo "Updating Folder Structure CLI Tool to the latest version..."
+
 git pull origin main
 
-pip install --user pipx
-pipx ensurepath
+pipx install --force -e .
 
-# Reinstall the package (from the project root)
-pipx install -e ./scripts
+echo "✅ CLI Tool updated successfully"
