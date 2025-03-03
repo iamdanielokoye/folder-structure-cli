@@ -1,33 +1,24 @@
 import os
 import sys
 import json
-
 import yaml
 from src.parser import parse_structure
 
-def create_folders_and_files(file_path, base_path):
+def create_folders_and_files(structure, base_path):
     """
-    Parses a structured text file (YAML/JSON-like) and creates the directory structure.
+    Recursively creates folders and files from a parsed structure.
     """
-    try:
-        def create_folders_and_files(structure, base_path):
-            """
-            Recursively creates folders and files from a parsed structure.
-            """
-            for item in structure:
-                path = os.path.join(base_path, item["name"])
+    for item in structure:
+        path = os.path.join(base_path, item["name"])
 
-                if item["type"] == "folder":
-                    os.makedirs(path, exist_ok=True)
-                    if "children" in item:
-                        create_folders_and_files(item["children"], path)
-                elif item["type"] == "file":
-                    open(path, 'w').close()  # Create empty file
-
-    except Exception as e:
-        print(f"⚠️ Error with structured TXT format: {e}")
-        print("🔄 Trying tree-based indentation method...")
-        create_structure_from_text(file_path, base_path)
+        if item["type"] == "folder":
+            os.makedirs(path, exist_ok=True)
+            if "children" in item:
+                create_folders_and_files(item["children"], path)
+        elif item["type"] == "file":
+            os.makedirs(os.path.dirname(path), exist_ok=True)
+            with open(path, 'w', encoding='utf-8'):
+                pass  # Create an empty file
 
 def create_structure_from_text(file_path, base_path):
     """
@@ -58,7 +49,8 @@ def create_structure_from_text(file_path, base_path):
             full_path = os.path.join(current_path, name)
 
             if '.' in name:  # File
-                with open(full_path, 'w', encoding='utf-8').close():
+                os.makedirs(os.path.dirname(full_path), exist_ok=True)
+                with open(full_path, 'w', encoding='utf-8'):
                     pass  # Create an empty file
             else:  # Directory
                 os.makedirs(full_path, exist_ok=True)
@@ -78,7 +70,9 @@ def create_structure_from_yaml(file_path, base_path):
                 os.makedirs(path, exist_ok=True)
                 create_from_dict(path, value)
             else:
-                open(path, 'w').close()
+                os.makedirs(os.path.dirname(path), exist_ok=True)
+                with open(path, 'w', encoding='utf-8'):
+                    pass  # Create an empty file
 
     with open(file_path, 'r', encoding='utf-8') as file:
         structure = yaml.safe_load(file)
@@ -103,6 +97,7 @@ def create_structure_from_json(file_path, base_path):
                     if "children" in item:
                         create_structure(item["children"], full_path)
                 elif item_type == "file":
+                    os.makedirs(os.path.dirname(full_path), exist_ok=True)
                     with open(full_path, 'w', encoding='utf-8'):
                         pass  # Create an empty file
 
