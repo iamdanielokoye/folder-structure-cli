@@ -1,17 +1,8 @@
 import os
 from setuptools import setup, find_packages
 
-def get_version():
-    version_path = os.path.join(os.path.dirname(__file__), "__version__.py") # Adjust path if needed
-    with open(version_path, "r") as f:
-        for line in f:
-            if line.startswith("__version__"):
-                return line.split("=")[1].strip().strip('"')
-    return "0.0.0" # Default version if not found
-
 setup(
     name="folder-structure-cli",
-    version=get_version(),
     packages=find_packages(where="../src"),  # Look for packages inside 'src'
     package_dir={'': '..'},  # Treat 'src' as the root package directory
     install_requires=[
