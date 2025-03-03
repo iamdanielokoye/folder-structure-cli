@@ -1,6 +1,8 @@
 import os
 import sys
 import json
+
+import yaml
 from src.parser import parse_structure
 
 def create_folders_and_files(file_path, base_path):
