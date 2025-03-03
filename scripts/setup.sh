@@ -4,9 +4,10 @@ echo "📦 Setting up the folder-cli..."
 
 # Ensure pip and setuptools are up to date
 pip install --upgrade pip setuptools 
+pip install requests
 
 # Install project dependencies
-pip install -r requirements.txt
+python3 -m pip install -r requirements.txt
 
 # Install the CLI tool
 pip install -e ./scripts

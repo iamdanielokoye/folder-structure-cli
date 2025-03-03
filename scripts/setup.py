@@ -13,7 +13,9 @@ setup(
     version=get_latest_release_tag(),
     packages=find_packages(where="../src"),  # Look for packages inside 'src'
     package_dir={'': '..'},  # Treat 'src' as the root package directory
-    
+    install_requires=[
+        'requests',  # Ensure requests is installed
+    ],
     entry_points={
         "console_scripts": [
             "folder-cli=src.cli:main",  # Calls the main() function in cli.py
