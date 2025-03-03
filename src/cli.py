@@ -1,9 +1,17 @@
 import argparse
+import requests
 import os
 import sys
 import subprocess
 from src.create_structure import create_folders_and_files, create_structure_from_text, create_structure_from_yaml, create_structure_from_json
 from src.parser import parse_structure
+
+def get_latest_release_tag():
+    url = "https://api.github.com/repos/iamdanielokoye/folder-structure-cli/releases/latest"
+    response = requests.get(url)
+    response.raise_for_status()
+    latest_release = response.json()
+    return latest_release["tag_name"]
 
 def list_tags():
     tags = ["create_structure", "parse_yaml", "parse_text", "--update", "--version", "--dry-run", "--verbose", "--config", "--force"]
@@ -33,7 +41,7 @@ def main():
     parser.add_argument("structure_file", nargs='?', help="Path to the structure file (YAML, JSON, or TXT)")
     parser.add_argument("output_directory", nargs='?', help="Target directory for the structure")
     parser.add_argument("--list-tags", action="store_true", help="List all available tags")
-    parser.add_argument("-u", "--update", action="store_true", help="Update the tool to the latest version")
+    parser.add_argument("-u", "--update", action="store_true", help=get_latest_release_tag())
     parser.add_argument("-v", "--version", action="version", version="Folder Structure CLI Tool 1.0")
     parser.add_argument("-dr", "--dry-run", action="store_true", help="Simulate the creation of the folder structure")
     parser.add_argument("-vb", "--verbose", action="store_true", help="Provide detailed output of the operations")
