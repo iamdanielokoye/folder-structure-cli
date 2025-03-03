@@ -2,7 +2,8 @@ import argparse
 import os
 import sys
 import subprocess
-from src.create_structure import create_folders_and_files 
+from src.create_structure import create_folders_and_files
+from src.create_structure import create_structure_from_text
 from src.parser import parse_structure
 
 def list_tags():
@@ -55,7 +56,10 @@ def main():
         parser.print_help()
         return
 
-    structure = parse_structure(args.structure_file)
+    if args.structure_file.endswith('.txt'):
+        structure = create_structure_from_text(args.structure_file, args.output_directory)
+    else:
+        structure = parse_structure(args.structure_file)
 
     if args.dry_run:
         print("Dry run mode: The following structure would be created:")

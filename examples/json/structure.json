@@ -1,0 +1,27 @@
+[
+{
+    "name": "project-name",
+    "type": "folder",
+    "children": [
+        {
+            "name": "src",
+            "type": "folder",
+            "children": [
+                {"name": "main.py", "type": "file"},
+                {"name": "utils.py", "type": "file"}
+            ]
+        },
+        {
+            "name": "tests",
+            "type": "folder",
+            "children": [
+                {"name": "test_main.py", "type": "file"}
+            ]
+        },
+        {"name": ".github/workflows", "type": "folder"},
+        {"name": ".gitignore", "type": "file"},
+        {"name": "LICENSE", "type": "file"},
+        {"name": "README.md", "type": "file"}
+    ]
+}
+]
