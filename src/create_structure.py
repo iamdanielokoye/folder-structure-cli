@@ -8,34 +8,19 @@ def create_folders_and_files(file_path, base_path):
     Parses a structured text file (YAML/JSON-like) and creates the directory structure.
     """
     try:
-        with open(file_path, 'r', encoding='utf-8') as file:
-            lines = file.readlines()
+        def create_folders_and_files(structure, base_path):
+            """
+            Recursively creates folders and files from a parsed structure.
+            """
+            for item in structure:
+                path = os.path.join(base_path, item["name"])
 
-        stack = []
-        current_path = base_path
-
-        for line in lines:
-            stripped = line.strip()
-            if not stripped:
-                continue
-
-            if stripped.startswith("folder:"):
-                folder_name = stripped.replace("folder:", "").strip()
-                full_path = os.path.join(base_path, *stack, folder_name)
-                os.makedirs(full_path, exist_ok=True)
-                stack.append(folder_name)
-
-            elif stripped.startswith("file:"):
-                file_name = stripped.replace("file:", "").strip()
-                full_path = os.path.join(base_path, *stack, file_name)
-                with open(full_path, 'w', encoding='utf-8'):
-                    pass  # Create an empty file
-
-            elif stripped == "end":
-                if stack:
-                    stack.pop()
-
-        print("✅ Successfully created structure using structured TXT format.")
+                if item["type"] == "folder":
+                    os.makedirs(path, exist_ok=True)
+                    if "children" in item:
+                        create_folders_and_files(item["children"], path)
+                elif item["type"] == "file":
+                    open(path, 'w').close()  # Create empty file
 
     except Exception as e:
         print(f"⚠️ Error with structured TXT format: {e}")
