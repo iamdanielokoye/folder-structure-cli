@@ -14,7 +14,12 @@ setup(
     packages=find_packages(where="../src"),  # Look for packages inside 'src'
     package_dir={'': '..'},  # Treat 'src' as the root package directory
     install_requires=[
-        'requests',  # Ensure requests is installed
+        'PyYAML==6.0.2',  # Pin the versions here, too
+        'requests==2.32.3',
+        'certifi==2025.1.31',
+        'charset-normalizer==3.4.1',
+        'idna==3.10',
+        'urllib3==2.3.0',
     ],
     entry_points={
         "console_scripts": [
