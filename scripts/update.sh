@@ -6,7 +6,7 @@ git pull origin main
 # 2. (Optional) Check for changes in requirements.txt and update if needed
 if git diff --quiet requirements.txt; then  # Check if requirements.txt has changed
     echo "Requirements file has changed. Updating dependencies..."
-    pip install -r requirements.txt
+    pip install --upgrade --force-reinstall -r requirements.txt
 else
     echo "No changes in requirements file."
 fi
