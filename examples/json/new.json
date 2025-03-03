@@ -1,0 +1,77 @@
+[
+    {
+      "name": "AWS-Landing-Zone-Automation",
+      "type": "folder",
+      "children": [
+        {
+          "name": "modules",
+          "type": "folder",
+          "children": [
+            {
+              "name": "control_tower",
+              "type": "folder",
+              "children": [
+                { "name": "main.tf", "type": "file" },
+                { "name": "variables.tf", "type": "file" },
+                { "name": "outputs.tf", "type": "file" }
+              ]
+            },
+            {
+              "name": "iam_policies",
+              "type": "folder",
+              "children": [
+                { "name": "main.tf", "type": "file" },
+                { "name": "variables.tf", "type": "file" },
+                { "name": "outputs.tf", "type": "file" }
+              ]
+            },
+            {
+              "name": "networking",
+              "type": "folder",
+              "children": [
+                { "name": "main.tf", "type": "file" },
+                { "name": "variables.tf", "type": "file" },
+                { "name": "outputs.tf", "type": "file" }
+              ]
+            },
+            {
+              "name": "security",
+              "type": "folder",
+              "children": [
+                { "name": "main.tf", "type": "file" },
+                { "name": "variables.tf", "type": "file" },
+                { "name": "outputs.tf", "type": "file" }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "scripts",
+          "type": "folder",
+          "children": [
+            { "name": "pre-deployment-checks.sh", "type": "file" }
+          ]
+        },
+        {
+          "name": ".github",
+          "type": "folder",
+          "children": [
+            {
+              "name": "workflows",
+              "type": "folder",
+              "children": [
+                { "name": "terraform-ci.yml", "type": "file" }
+              ]
+            }
+          ]
+        },
+        { "name": ".gitignore", "type": "file" },
+        { "name": "LICENSE", "type": "file" },
+        { "name": "README.md", "type": "file" },
+        { "name": "main.tf", "type": "file" },
+        { "name": "variables.tf", "type": "file" },
+        { "name": "outputs.tf", "type": "file" }
+      ]
+    }
+  ]
+  
