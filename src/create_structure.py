@@ -82,6 +82,21 @@ def create_structure_from_text(file_path, base_path):
     except Exception as e:
         print(f"❌ Failed to create structure using tree indentation: {e}")
 
+def create_structure_from_yaml(file_path, base_path):
+    """Parses a YAML file and creates the directory structure properly."""
+    def create_from_dict(base_path, structure):
+        for key, value in structure.items():
+            path = os.path.join(base_path, key)
+            if isinstance(value, dict):
+                os.makedirs(path, exist_ok=True)
+                create_from_dict(path, value)
+            else:
+                open(path, 'w').close()
+
+    with open(file_path, 'r', encoding='utf-8') as file:
+        structure = yaml.safe_load(file)
+        create_from_dict(base_path, structure)
+
 def create_structure_from_json(file_path, base_path):
     """
     Parses a JSON file and creates the directory structure.
@@ -125,6 +140,8 @@ def main():
         create_structure_from_json(structure_file, output_directory)
     elif structure_file.endswith('.txt'):
         create_structure_from_text(structure_file, output_directory)
+    elif structure_file.endswith('.yaml') or structure_file.endswith('.yml'):
+        create_structure_from_yaml(structure_file, output_directory)
     else:
         structure = parse_structure(structure_file)
         create_folders_and_files(structure, output_directory)
