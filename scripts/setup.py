@@ -1,16 +1,17 @@
-import requests
+import os
 from setuptools import setup, find_packages
 
-def get_latest_release_tag():
-    url = "https://api.github.com/repos/iamdanielokoye/folder-structure-cli/releases/latest"
-    response = requests.get(url)
-    response.raise_for_status()
-    latest_release = response.json()
-    return latest_release["tag_name"]
+def get_version():
+    version_path = os.path.join(os.path.dirname(__file__), "../version.py") # Adjust path if needed
+    with open(version_path, "r") as f:
+        for line in f:
+            if line.startswith("__version__"):
+                return line.split("=")[1].strip().strip('"')
+    return "0.0.0" # Default version if not found
 
 setup(
     name="folder-structure-cli",
-    version=get_latest_release_tag(),
+    version=get_version(),
     packages=find_packages(where="../src"),  # Look for packages inside 'src'
     package_dir={'': '..'},  # Treat 'src' as the root package directory
     install_requires=[
